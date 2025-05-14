@@ -5,13 +5,13 @@ using [VisualVM](https://visualvm.github.io/) (i.e. via JMX).
 
 Compile native image using:
 
-```shell script
+```shell
 ./mvnw verify -Dnative
 ```
 
 Run the generated native executable via:
 
-```shell script
+```shell
 ./target/quarkus-native-startup-*-runner
 ```
 
@@ -25,7 +25,7 @@ This allows local connections via *jvmstat*. This is enough to monitor e.g. garb
 
 It is also possible to connect via JMX. In that case, the native executable must be started via:
 
-```shell script
+```shell
 ./target/quarkus-native-startup-*-runner \
   -Dcom.sun.management.jmxremote \
   -Dcom.sun.management.jmxremote.port=1099 \
@@ -39,12 +39,25 @@ However, this is not useful as of now as VisualVM doesn't fully support native e
 
 A REST request can be sent using *curl*:
 
-```shell script
+```shell
 curl -X POST --location "http://localhost:8080/are-you-ready" \
     -H "Content-Type: application/json" \
     -d '{
-          "activity": "party"
+          "activity": "partying"
         }'
 ```
 
-If successful, it should print: *Let's get started with party!*
+If successful, it should print: *Let's get started with partying!*
+
+To put some heavy load on the server, use a benchmark tool such as [wrk](https://github.com/wg/wrk). A *wrk.lua* script
+is provided and can be used as follows:
+
+```shell
+wrk -t26 -c600 -d25s http://localhost:8080/are-you-ready -s wrk.lua
+```
+
+The native executable using all available system memory. Memory can be limited via `-Xmx` JVM parameter:
+
+```shell
+./target/quarkus-native-startup-*-runner -Xmx256M
+```
