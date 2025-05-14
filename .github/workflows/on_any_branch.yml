@@ -8,7 +8,7 @@ on:
       - bugfix/*
 
 jobs:
-  build-and-publish:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
