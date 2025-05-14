@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: 'maven'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    groups:
+      maven-updates:
+        patterns:
+          - '*'
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    target-branch: 'main'
+    groups:
+      github-actions-updates:
+        patterns:
+          - '*'
